@@ -1,0 +1,26 @@
+from common import fetch_crime_stats_for_postcode, fetch_postcode_from_zoopla
+
+def run_cli_version():
+    postcode_input = input("Enter postcode or Zoopla URL: ")
+    
+    if "zoopla.co.uk" in postcode_input:
+        postcode = fetch_postcode_from_zoopla(postcode_input)
+        if not postcode:
+            print("Failed to retrieve postcode from the URL.")
+            return
+    else:
+        postcode = postcode_input
+
+    stats, lat_lon = fetch_crime_stats_for_postcode(postcode)
+    if stats and lat_lon:
+        #print("Latitude and Longitude: ", lat_lon)
+        print("In the last 12 months, there are", stats["crime_count"], "crimes in the area.")
+        print("The most frequent crimes are", stats["top_three_frequent_crime"])
+        print("The most frequent street is", stats["most_frequent_street"])
+        print("The number of crimes in the last 12 months are:")
+        print(stats["monthly_crime_count"])
+    else:
+        print("Unable to fetch data.")
+
+if __name__ == "__main__":
+    run_cli_version()
