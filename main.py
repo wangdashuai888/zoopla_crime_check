@@ -1,5 +1,5 @@
 from cli_version import run_cli_version
-from gui_version import run_gui_version
+#from gui_version import run_gui_version
 import traceback
 
 # def main():
@@ -23,7 +23,8 @@ def main():
                 run_cli_version()
                 break
             elif choice == 'gui':
-                run_gui_version()
+                print("GUI version is not available yet. Please try again.")
+                #run_gui_version()
                 break
             else:
                 print("Invalid choice. Please try again.")
