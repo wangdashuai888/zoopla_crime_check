@@ -1,12 +1,10 @@
 import requests
 from collections import Counter
-from selenium import webdriver
+#from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+#from selenium.webdriver.chrome.options import Options
+
 
 
 
@@ -67,9 +65,12 @@ def fetch_crime_stats_for_postcode(postcode):
     return stats, (latitude, longitude)
 
 def fetch_postcode_from_zoopla(url):
+    print("Returning a test code")
+    return "SW11 1AA"
+#temporarily disable the function for testing purpose
+#def fetch_postcode_from_zoopla(url):
     try:
         # Create a new instance of the Chrome driver
-
         chrome_options = Options()
         chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--disable-gpu")
@@ -80,9 +81,6 @@ def fetch_postcode_from_zoopla(url):
 
         # Navigate to the provided URL
         driver.get(url)
-
-        #wait until the element is loaded
-        wait = WebDriverWait(driver, 5)
 
         # Use beautiful soup to parse the html
         soup = BeautifulSoup(driver.page_source, 'html.parser')
