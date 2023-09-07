@@ -1,7 +1,8 @@
 from common import fetch_crime_stats_for_postcode, fetch_postcode_from_zoopla
 
-def run_cli_version():
-    postcode_input = input("Enter postcode or Zoopla URL: ")
+def run_cli_version(input_data):
+    postcode_input = input_data
+    #postcode_input = input("Enter postcode or Zoopla URL: ")
     
     if "zoopla.co.uk" in postcode_input:
         postcode = fetch_postcode_from_zoopla(postcode_input)

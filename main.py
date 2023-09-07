@@ -1,38 +1,21 @@
 from cli_version import run_cli_version
 #from gui_version import run_gui_version
 import traceback
-
-# def main():
-#     while True:
-#         choice = input("Would you like to use the CLI or GUI version? Enter 'CLI' or 'GUI': ").strip().lower()
-#         if choice == 'cli':
-#             run_cli_version()
-#             break
-#         elif choice == 'gui':
-#             run_gui_version()
-#             break
-#         else:
-#             print("Invalid choice. Please try again.")
-
+import argparse
 #modify the old main into try/except
-def main():
-    while True:
-        try:
-            choice = input("Would you like to use the CLI or GUI version? Enter 'CLI' or 'GUI': ").strip().lower()
-            if choice == 'cli':
-                run_cli_version()
-                break
-            elif choice == 'gui':
-                print("GUI version is not available yet. Please try again.")
-                #run_gui_version()
-                break
-            else:
-                print("Invalid choice. Please try again.")
-        except Exception:
-            print("Something went wrong. Please try again.")
-            traceback.print_exc()
 
-
+def main(input_data):
+    print("Recived Input: ", input_data)
+    try:
+        run_cli_version(input_data)
+    except Exception:
+        print("Something went wrong. Please try again.")
+        traceback.print_exc()
     
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Test script for PHP to call')
+    parser.add_argument('--input', required=True, help='Input data (URL or Postcode)')
+    
+    args = parser.parse_args()
+    main(args.input)
+
