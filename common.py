@@ -2,6 +2,24 @@ import requests
 from collections import Counter
 import requests
 import datetime
+import matplotlib.pyplot as plt
+
+def date_constructor():
+     #get current month and year
+    now = datetime.datetime.now()
+    #urls should be last 12 months
+    #construct &date first
+
+    #now get remaining months from last year
+
+    dates = [
+        str(now.year) + "-" + str(now.month - i - 2) for i in range(now.month-2)#go back 2 months
+    ]
+    dates.extend([
+        str(now.year - 1) + "-" + str(12 - i) for i in range(12 - now.month + 2)
+    ])
+    return dates
+
 
 def fetch_crime_stats_for_postcode(postcode):
     url = "https://api.postcodes.io/postcodes/" + postcode
@@ -14,23 +32,11 @@ def fetch_crime_stats_for_postcode(postcode):
         admin_ward = str(response.json()["result"]["admin_ward"])
     else:
         print(f"Error {response.status_code}: {response.text}")
-        return None, None
+        return None, None, None
 
     poly = str(float(latitude) + 0.0045) + "," + str(float(longitude) + 0.0045) + ":" + str(float(latitude) + 0.0045) + "," + str(float(longitude) - 0.0045) + ":" + str(float(latitude) - 0.0045) + "," + str(float(longitude) - 0.0045) + ":" + str(float(latitude) - 0.0045) + "," + str(float(longitude) + 0.0045)
     url = "https://data.police.uk/api/crimes-street/all-crime?poly=" + poly
-
-    #get current month and year
-    now = datetime.datetime.now()
-    #urls should be last 12 months
-    #construct &date first
-    dates = [
-        str(now.year) + "-" + str(now.month - i - 2) for i in range(now.month-3)#go back 2 months
-    ]
-    #now get remaining months from last year
-    dates.extend([
-        str(now.year - 1) + "-" + str(12 - i) for i in range(12 - now.month + 2)
-    ])
-
+    dates = date_constructor()
     urls = [
         url + "&date=" + date for date in dates
     ]
@@ -60,3 +66,16 @@ def fetch_crime_stats_for_postcode(postcode):
     }
 
     return stats, (latitude, longitude), admin_ward
+
+def visualize_crime_stats(stats, postcode):
+    #reverse stats and date so that the most recent month is last
+    #get number list from stat
+    stats = stats["monthly_crime_count"][::-1]
+    dates = date_constructor()[::-1]
+    fig, ax = plt.subplots()
+    ax.plot(dates, stats)
+    ax.set(xlabel='Month', ylabel='Number of Crimes', title='Number of Crimes in ' + postcode)
+    ax.grid()
+    plt.xticks(rotation=45)
+    plt.show()
+

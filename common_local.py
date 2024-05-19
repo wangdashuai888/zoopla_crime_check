@@ -1,3 +1,4 @@
+# Description: This file contains the common functions that are only used locally.
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
@@ -21,7 +22,7 @@ def fetch_postcode_from_zoopla(url):
 
         # Find type="application/json"
         element = soup.find('script', type="application/json")
-        
+
         # Extract and return the outcode and incode
         outcode = element.text.split('"outcode":"')[1].split('"')[0]
         incode = element.text.split('"incode":"')[1].split('"')[0]
