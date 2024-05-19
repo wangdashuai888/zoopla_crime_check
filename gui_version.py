@@ -1,5 +1,6 @@
 import tkinter as tk
-from common import fetch_crime_stats_for_postcode, fetch_postcode_from_zoopla
+from common import fetch_crime_stats_for_postcode
+from common_local import fetch_postcode_from_zoopla
 
 def fetch_data():
     input_data = entry.get()
@@ -12,9 +13,9 @@ def fetch_data():
     else:
         postcode = input_data
 
-    stats, lat_lon = fetch_crime_stats_for_postcode(postcode)
-    if stats and lat_lon:
-        result.set(f"Latitude and Longitude: {lat_lon}\n"
+    stats, lat_lon, admin_ward = fetch_crime_stats_for_postcode(postcode)
+    if stats and lat_lon and admin_ward:
+        result.set(f"The location is:{admin_ward}\n"
                    f"In the last 12 months, there are {stats['crime_count']} crimes in the area.\n"
                    f"The most frequent crimes are {stats['top_three_frequent_crime']}\n"
                    f"The most frequent street is {stats['most_frequent_street']}\n"

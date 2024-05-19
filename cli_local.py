@@ -1,17 +1,17 @@
 from common import fetch_crime_stats_for_postcode
+from common_local import fetch_postcode_from_zoopla
 
-def run_cli_version(input_data):
+def run_cli_local(input_data):
     postcode_input = input_data
     #postcode_input = input("Enter postcode or Zoopla URL: ")
     
-    # if "zoopla.co.uk" in postcode_input:
-    #     postcode = fetch_postcode_from_zoopla(postcode_input)
-    #     if not postcode:
-    #         print("Failed to retrieve postcode from the URL.")
-    #         return
-    # else:
-    #     postcode = postcode_input
-    postcode = postcode_input
+    if "zoopla.co.uk" in postcode_input:
+        postcode = fetch_postcode_from_zoopla(postcode_input)
+        if not postcode:
+            print("Failed to retrieve postcode from the URL.")
+            return
+    else:
+        postcode = postcode_input
 
     stats, lat_lon, admin_ward = fetch_crime_stats_for_postcode(postcode)
     if stats and lat_lon and admin_ward:
@@ -25,4 +25,4 @@ def run_cli_version(input_data):
         print("Unable to fetch data.")
 
 if __name__ == "__main__":
-    run_cli_version()
+    run_cli_local()

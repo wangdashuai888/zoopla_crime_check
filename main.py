@@ -1,8 +1,6 @@
 from cli_version import run_cli_version
-#from gui_version import run_gui_version
 import traceback
 import argparse
-#modify the old main into try/except
 
 def main(input_data):
     print("Recived Input: ", input_data)
