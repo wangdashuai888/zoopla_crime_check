@@ -34,8 +34,6 @@ def fetch_crime_stats_for_postcode(postcode):
     urls = [
         url + "&date=" + date for date in dates
     ]
-    #print urls to check
-    print(urls)
 
     merged_results = []
     number_list = []
